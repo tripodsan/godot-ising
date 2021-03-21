@@ -1,0 +1,213 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://render.gd" type="Script" id=1]
+[ext_resource path="res://Viewport.gd" type="Script" id=2]
+[ext_resource path="res://ising.tres" type="Material" id=3]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("ViewportContainer/Viewport")
+
+[sub_resource type="StyleBoxFlat" id=2]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color( 0.2, 0.219608, 0.278431, 1 )
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Label
+
+func set_counter():
+  self.set_text(\"FPS: \" + str(Engine.get_frames_per_second()));
+
+func _ready():
+  self.set_counter()
+
+func _physics_process(_delta: float):
+  self.set_counter()
+"
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 800.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
+size = Vector2( 1024, 800 )
+transparent_bg = true
+handle_input_locally = false
+disable_3d = true
+usage = 0
+render_target_clear_mode = 2
+render_target_update_mode = 0
+gui_disable_input = true
+script = ExtResource( 2 )
+pPanel = NodePath("../../CanvasLayer/panel")
+
+[node name="render" type="ColorRect" parent="ViewportContainer/Viewport"]
+material = ExtResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+pSize = NodePath("../../../CanvasLayer/panel/VBoxContainer/GridContainer/ctlSize")
+pCurl = NodePath("../../../CanvasLayer/panel/VBoxContainer/GridContainer/ctlCurl")
+pGrad = NodePath("../../../CanvasLayer/panel/VBoxContainer/GridContainer/ctlGrad")
+pHeat = NodePath("../../../CanvasLayer/panel/VBoxContainer/GridContainer/ctlHeat")
+pMouse = NodePath("../../../CanvasLayer/panel/VBoxContainer/GridContainer/ctlMouse")
+
+[node name="output" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="panel" type="PanelContainer" parent="CanvasLayer"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -175.0
+custom_styles/panel = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/panel"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 171.0
+margin_bottom = 596.0
+
+[node name="FPS" type="Label" parent="CanvasLayer/panel/VBoxContainer"]
+margin_right = 167.0
+margin_bottom = 14.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "FPS: N/A"
+align = 1
+valign = 1
+script = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="HSeparator" type="HSeparator" parent="CanvasLayer/panel/VBoxContainer"]
+margin_top = 18.0
+margin_right = 167.0
+margin_bottom = 22.0
+
+[node name="GridContainer" type="GridContainer" parent="CanvasLayer/panel/VBoxContainer"]
+margin_top = 26.0
+margin_right = 167.0
+margin_bottom = 154.0
+custom_constants/vseparation = 3
+custom_constants/hseparation = 9
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="labSize" type="Label" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_top = 5.0
+margin_right = 77.0
+margin_bottom = 19.0
+text = "size:"
+align = 2
+
+[node name="ctlSize" type="SpinBox" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_left = 86.0
+margin_right = 160.0
+margin_bottom = 24.0
+min_value = 1.0
+max_value = 10.0
+value = 1.0
+align = 2
+
+[node name="labCurl" type="Label" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_top = 32.0
+margin_right = 77.0
+margin_bottom = 46.0
+text = "curl weight:"
+align = 2
+
+[node name="ctlCurl" type="SpinBox" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_left = 86.0
+margin_top = 27.0
+margin_right = 160.0
+margin_bottom = 51.0
+max_value = 2.0
+step = 0.01
+align = 2
+
+[node name="labGrad" type="Label" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_top = 59.0
+margin_right = 77.0
+margin_bottom = 73.0
+text = "grad weight:"
+align = 2
+
+[node name="ctlGrad" type="SpinBox" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_left = 86.0
+margin_top = 54.0
+margin_right = 160.0
+margin_bottom = 78.0
+max_value = 2.0
+step = 0.01
+align = 2
+
+[node name="labHeat" type="Label" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_top = 86.0
+margin_right = 77.0
+margin_bottom = 100.0
+text = "heat:"
+align = 2
+
+[node name="ctlHeat" type="SpinBox" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_left = 86.0
+margin_top = 81.0
+margin_right = 160.0
+margin_bottom = 105.0
+max_value = 1.0
+step = 0.01
+align = 2
+
+[node name="labMouse" type="Label" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_top = 111.0
+margin_right = 77.0
+margin_bottom = 125.0
+text = "mouse:"
+align = 2
+
+[node name="ctlMouse" type="OptionButton" parent="CanvasLayer/panel/VBoxContainer/GridContainer"]
+margin_left = 86.0
+margin_top = 108.0
+margin_right = 160.0
+margin_bottom = 128.0
+text = "Random"
+clip_text = true
+items = [ "Random", null, false, 0, null, "Direction", null, false, 1, null ]
+selected = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
