@@ -11,7 +11,7 @@ uniform vec2 u_mouse_direction = vec2(0., 0.);
 
 uniform bool u_clear = false;
 
-const float STEP = 10.0;
+const float STEP = 1.0;
 
 /**
  * procedural white noise
@@ -130,7 +130,7 @@ void fragment() {
   vec2 st = SCREEN_UV;
   vec2 pos = FRAGCOORD.xy;
 
-  if (mod(pos.x, STEP) > 3.0 || mod(pos.y, STEP) > 3.0) {
+  if (STEP > 1.0 && mod(pos.x, STEP) > 3.0 || mod(pos.y, STEP) > 3.0) {
   //if (false) {
     COLOR.rgb = vec3(0);
   } else {
