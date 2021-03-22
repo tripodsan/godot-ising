@@ -4,11 +4,12 @@
 
 [resource]
 shader = ExtResource( 1 )
-shader_param/mouse_pressed = false
-shader_param/mouse_position = Vector2( 0, 0 )
-shader_param/mouse_direction = Vector2( 0, 0 )
 shader_param/u_size = 4.0
 shader_param/u_curl_weight = 0.0
 shader_param/u_grad_weight = 0.5
 shader_param/u_heat = 0.0
-shader_param/u_mouse = 0
+shader_param/u_mouse_mode = 0
+shader_param/u_mouse_pressed = false
+shader_param/u_mouse_position = Vector2( 0, 0 )
+shader_param/u_mouse_direction = Vector2( 0, 0 )
+shader_param/u_clear = false
